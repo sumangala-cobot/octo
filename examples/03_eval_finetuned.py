@@ -24,7 +24,7 @@ import jax
 import numpy as np
 import wandb
 
-sys.path.append("path/to/your/act")
+sys.path.append("/app/act")
 
 # keep this to register ALOHA sim env
 from envs.aloha_sim_env import AlohaGymEnv  # noqa
