@@ -8,6 +8,20 @@
 This repo contains code for training and finetuning Octo generalist robotic policies (GRPs).
 Octo models are transformer-based diffusion policies, trained on a diverse mix of 800k robot trajectories.
 
+## Docker Setup and Preliminary runs
+
+Build docker image: docker build -t octo .
+Create results directory: mkdir results_data
+Run container: docker run -it --rm --gpus all octo -v /home/username/octo/results_data:/app/results_data
+Add permission for install script: chmod +x install.sh
+Run the install script: ./install.sh
+
+To fine-tune, download dataset and run: python examples/02_finetune_new_observation_action.py --pretrained_path=hf://rail-berkeley/octo-small-1.5 --data_dir=/app/example_sim_data/aloha_sim_dataset/ --batch_size=64 --save_dir=/app/results_data/custom_run_title
+[Batch size 64 works for 16GB laptop GPU, 5000 steps in ~32min]
+
+Evaluate in sim (CubeTransfer): python3 03_eval_finetuned.py --finetuned_path=/app/results_data/
+
+
 ## Get Started
 
 Follow the installation instructions, then load a pretrained Octo model! See [examples](examples/) for guides to zero-shot evaluation and finetuning and [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1z0vELj_lX9OWeoMG_WvXnQs43aPOEAhz?usp=sharing)
